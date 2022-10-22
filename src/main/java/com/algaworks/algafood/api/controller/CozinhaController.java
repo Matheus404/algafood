@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,7 +57,7 @@ public class CozinhaController {
 		 if(cozinhaAtual.isPresent()) {
 			 //cozinhaAtual.get().setNome(cozinha.getNome());
 			 BeanUtils.copyProperties(cozinha, cozinhaAtual.get(), "id");
-			 cozinhaRepository.save(cozinhaAtual.get());
+			 cadastroCozinhaService.salvar(cozinhaAtual.get());
 			 return new ResponseEntity<Cozinha>(cozinhaAtual.get(), HttpStatus.CREATED);
 		 }
 		 

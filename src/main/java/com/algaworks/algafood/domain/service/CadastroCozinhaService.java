@@ -7,7 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
-import com.algaworks.algafood.domain.exception.EntidadeNaoEncontrada;
+import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 
@@ -26,7 +26,7 @@ public class CadastroCozinhaService {
 		
 		try {
 			if(cozinha.isEmpty()) {
-				throw new EntidadeNaoEncontrada(String
+				throw new EntidadeNaoEncontradaException(String
 							.format("A Cozinha de código %d não foi encontrada!", cozinhaId));
 			}
 			cozinhaRepository.deleteById(cozinhaId);

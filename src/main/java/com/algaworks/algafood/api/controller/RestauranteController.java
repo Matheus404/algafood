@@ -65,7 +65,8 @@ public class RestauranteController {
 			if(restauranteAtual.isEmpty()) {
 				return ResponseEntity.notFound().build();
 			}
-			BeanUtils.copyProperties(restaurante, restauranteAtual.get(), "id");
+			BeanUtils.copyProperties(restaurante, restauranteAtual.get(),
+					"id", "formasPagamento");
 			cadastroRestauranteService.salvar(restauranteAtual.get());
 			return new ResponseEntity<Restaurante>(restauranteAtual.get(), HttpStatus.CREATED);
 			

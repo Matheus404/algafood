@@ -1,6 +1,7 @@
 package com.algaworks.algafood.domain.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -30,8 +33,19 @@ public class Restaurante {
 	@JoinColumn(name = "cozinha_id", nullable = false)
 	private Cozinha cozinha;
 
+	@JsonIgnore
 	@Embedded
 	private Endereco endereco;
+
+	@JsonIgnore
+	@CreationTimestamp
+	@Column(nullable = false)
+	private LocalDateTime dataCadastro;
+
+	@JsonIgnore
+	@UpdateTimestamp
+	@Column(nullable = false)
+	private LocalDateTime dataAtualizacao;
 
 	@JsonIgnore
 	@ManyToMany

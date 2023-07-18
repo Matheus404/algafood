@@ -21,4 +21,6 @@
 
     insert into permissao (id, nome, descricao) values (51, 'CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
     insert into permissao (id, nome, descricao) values (52, 'EDITAR_COZINHAS', 'Permite editar cozinhas');
+
+    insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (51, 51), (51, 52), (51, 53), (52, 53), (53, 52), (53, 53);
     

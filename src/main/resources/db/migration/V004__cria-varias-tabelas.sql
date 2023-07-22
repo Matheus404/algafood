@@ -45,7 +45,7 @@ create table restaurante (
                              data_atualizacao timestamp not null,
                              data_cadastro timestamp not null,
 
-                             endereco_cidade_id BIGSERIAL,
+                             endereco_cidade_id bigint,
                              endereco_cep varchar(9),
                              endereco_logradouro varchar(100),
                              endereco_numero varchar(20),

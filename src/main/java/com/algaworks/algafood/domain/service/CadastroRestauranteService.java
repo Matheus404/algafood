@@ -13,22 +13,27 @@ import com.algaworks.algafood.domain.repository.RestauranteRepository;
 
 @Service
 public class CadastroRestauranteService {
-	
+
+	private static final String MSG_RESTAURANTE_NAO_ENCONTRADO = "Não existe um cadastro de restaurante com código %d";
+
 	@Autowired
 	private RestauranteRepository restauranteRepository;
 	
 	@Autowired
-	private CozinhaRepository cozinhaRepository;
+	private CadastroCozinhaService cadastroCozinhaService;
 	
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
-		Optional<Cozinha> cozinha = cozinhaRepository.findById(cozinhaId);
-		if(cozinha.isEmpty()) {
-			throw new EntidadeNaoEncontradaException(String
-							.format("A Cozinha com o código %d não foi encontrada!", cozinhaId));
-		}
+		Cozinha cozinha = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
+		restaurante.setCozinha(cozinha);
 		
 		return restauranteRepository.save(restaurante);
+	}
+
+	public Restaurante buscarOuFalhar(Long restauranteId) {
+		return restauranteRepository.findById(restauranteId)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException(
+						String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
 	}
 	
 }

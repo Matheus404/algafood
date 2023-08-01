@@ -3,6 +3,7 @@ package com.algaworks.algafood.domain.service;
 import java.util.EmptyStackException;
 import java.util.Optional;
 
+import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -36,8 +37,7 @@ public class CadastroCozinhaService {
         } catch (EmptyResultDataAccessException e) {
 //			throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("A Cozinha de código %d não foi encontrada!", cozinhaId));
 
-				throw new EntidadeNaoEncontradaException(String
-							.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId));
+				throw new CozinhaNaoEncontradaException(cozinhaId);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(String
@@ -47,8 +47,7 @@ public class CadastroCozinhaService {
 
     public Cozinha buscarOuFalhar(Long cozinhaId) {
         return cozinhaRepository.findById(cozinhaId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                        String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId)));
+                .orElseThrow(() -> new CozinhaNaoEncontradaException(cozinhaId));
     }
 
 }

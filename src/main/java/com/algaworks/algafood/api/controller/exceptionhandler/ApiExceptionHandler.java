@@ -19,55 +19,40 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
     public ResponseEntity<?> tratarEntidadeNaoEncontradaException(
-            EntidadeNaoEncontradaException e) {
-        Problema problema = Problema.builder()
-                .dataHora(LocalDateTime.now())
-                .mensagem(e.getMessage()).build();
+            EntidadeNaoEncontradaException ex, WebRequest request) {
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(problema);
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(NegocioException.class)
-    public ResponseEntity<?> tratarNegocioException(NegocioException e) {
-        Problema problema = Problema.builder()
-                .dataHora(LocalDateTime.now())
-                .mensagem(e.getMessage()).build();
+    public ResponseEntity<?> tratarNegocioException(NegocioException ex, WebRequest request) {
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(problema);
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-//    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-//    public ResponseEntity<?> tratarHttpMediaTypeNotSupportedException() {
-//        Problema problema = Problema.builder()
-//                .dataHora(LocalDateTime.now())
-//                .mensagem("O tipo de mídia não é aceito.").build();
-//
-//        return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-//                .body(problema);
-//    }
-
     @ExceptionHandler(EntidadeEmUsoException.class)
-    public ResponseEntity<?> tretarEntidadeEmUsoException(EntidadeEmUsoException e) {
-        Problema problema = Problema.builder()
-                .dataHora(LocalDateTime.now())
-                .mensagem(e.getMessage())
-                .build();
+    public ResponseEntity<?> tretarEntidadeEmUsoException(EntidadeEmUsoException ex, WebRequest request) {
 
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(problema);
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
     @Override
-    protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(
-            HttpMediaTypeNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleExceptionInternal(
+            Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-        Problema problema = Problema.builder()
-                .dataHora(LocalDateTime.now())
-                .mensagem("O tipo de mídia não é aceito.").build();
+        if (body == null) {
+            body = Problema.builder()
+                    .dataHora(LocalDateTime.now())
+                    .mensagem(status.getReasonPhrase())
+                    .build();
+        } else if (body instanceof String) {
+            body = Problema.builder()
+                    .dataHora(LocalDateTime.now())
+                    .mensagem((String) body)
+                    .build();
+        }
 
-        return handleExceptionInternal(ex, problema, headers, status, request);
+
+        return super.handleExceptionInternal(ex, body, headers, status, request);
     }
-
 }

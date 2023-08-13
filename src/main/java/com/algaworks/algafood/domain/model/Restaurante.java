@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,6 +26,7 @@ public class Restaurante {
 	private Long id;
 	
 	@Column(nullable = false)
+	@NotBlank
 	private String nome;
 	
 	@Column(name = "taxa_frete", nullable = false)

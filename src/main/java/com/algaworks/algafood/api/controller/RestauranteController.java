@@ -24,6 +24,7 @@ import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -46,7 +47,7 @@ public class RestauranteController {
     }
 
     @PostMapping
-    public Restaurante adcionar(@RequestBody Restaurante restaurante) {
+    public Restaurante adcionar(@RequestBody @Valid Restaurante restaurante) {
         try {
             return cadastroRestauranteService.salvar(restaurante);
         } catch (EntidadeNaoEncontradaException e) {
@@ -56,7 +57,7 @@ public class RestauranteController {
 
     @PutMapping("/{restauranteId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Restaurante atualizar(@PathVariable Long restauranteId, @RequestBody Restaurante restaurante) {
+    public Restaurante atualizar(@PathVariable Long restauranteId, @RequestBody @Valid Restaurante restaurante) {
         Restaurante restauranteAtual = cadastroRestauranteService.buscarOuFalhar(restauranteId);
         BeanUtils.copyProperties(restaurante, restauranteAtual,
                 "id", "formasPagamento", "endereco", "dataCadastro", "produtos");

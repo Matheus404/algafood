@@ -15,6 +15,8 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.service.CadastroCozinhaService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/cozinhas")
 public class CozinhaController {
@@ -41,13 +43,13 @@ public class CozinhaController {
     }
 
     @PostMapping
-    public ResponseEntity<Cozinha> adicionar(@RequestBody Cozinha cozinha) {
+    public ResponseEntity<Cozinha> adicionar(@RequestBody @Valid Cozinha cozinha) {
         return new ResponseEntity<Cozinha>(cadastroCozinhaService.salvar(cozinha),
                 HttpStatus.CREATED);
     }
 
     @PutMapping("/{cozinhaId}")
-    public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha) {
+    public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId, @RequestBody @Valid Cozinha cozinha) {
         Cozinha cozinhaAtual = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
         BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
         cadastroCozinhaService.salvar(cozinhaAtual);

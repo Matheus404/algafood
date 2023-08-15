@@ -7,12 +7,14 @@ import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
+import com.algaworks.algafood.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -32,13 +34,14 @@ public class Restaurante {
 	@NotBlank
 	private String nome;
 
-	@DecimalMin("0")
+	@PositiveOrZero
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
 	//@JsonIgnore
 	//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 	@Valid
+	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
 	@ManyToOne//(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cozinha_id", nullable = false)
 	@NotNull

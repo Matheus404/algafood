@@ -16,12 +16,15 @@ import javax.validation.groups.Default;
 import com.algaworks.algafood.core.validation.Groups;
 import com.algaworks.algafood.core.validation.Multiplo;
 import com.algaworks.algafood.core.validation.TaxaFrete;
+import com.algaworks.algafood.core.validation.ValorZeroIncluiDescricao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+@ValorZeroIncluiDescricao(valorField = "taxaFrete",
+		descricaoField = "nome", descricaoObrigatoria = "Frete Grátis")
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
@@ -38,8 +41,8 @@ public class Restaurante {
 
 	@NotNull
 	@PositiveOrZero
-	@Multiplo(numero = 5)
-	@TaxaFrete
+	//@Multiplo(numero = 5)
+	//@TaxaFrete
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 

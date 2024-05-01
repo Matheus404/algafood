@@ -5,6 +5,7 @@ import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.model.Cozinha;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -81,6 +82,21 @@ class CadastroCozinhaIT {
                     .get()
                 .then()
                     .statusCode(200);
+    }
+
+    @Test
+    void deveRetornar4Cozinhas_QuandoConsultarAListaDeCozinhas() {
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+
+        RestAssured.given()
+                .basePath("/cozinhas")
+                .port(port)
+                .accept(ContentType.JSON)
+                .when()
+                .get()
+                .then()
+                .body("", Matchers.hasSize(4))
+                .body("nome", Matchers.hasItems("Indiana", "Taillandesa"));
     }
 
 

@@ -6,6 +6,7 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +25,13 @@ class CadastroCozinhaIT {
     private int port;
     @Autowired
     private CadastroCozinhaService cadastroCozinhaService;
+
+    @BeforeEach
+    void setUp() {
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+        RestAssured.port = port;
+        RestAssured.basePath = "/cozinhas";
+    }
 
     @Test
     void deveSalvarCozinhaComSucesso() {
@@ -72,11 +80,8 @@ class CadastroCozinhaIT {
      */
     @Test
     void deveRetornarStatus200_QuandoConsultarAListaDeCozinhas() {
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
         RestAssured.given()
-                    .basePath("/cozinhas")
-                    .port(port)
                     .accept(ContentType.JSON)
                 .when()
                     .get()
@@ -86,11 +91,8 @@ class CadastroCozinhaIT {
 
     @Test
     void deveRetornar4Cozinhas_QuandoConsultarAListaDeCozinhas() {
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
         RestAssured.given()
-                .basePath("/cozinhas")
-                .port(port)
                 .accept(ContentType.JSON)
                 .when()
                 .get()

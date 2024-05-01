@@ -126,6 +126,29 @@ class CadastroCozinhaIT {
                 .statusCode(HttpStatus.CREATED.value());
     }
 
+    @Test
+    void deveRetornarRespostaEStatusCorretos_QuandoConsultarCozinhaExistente() {
 
+        RestAssured.given()
+                .pathParam("cozinhaId", 2)
+                .accept(ContentType.JSON)
+                .when()
+                .get("/{cozinhaId}")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("nome", Matchers.equalTo("Indiana"));
+    }
+
+    @Test
+    void deveRetornarStatus404_QuandoConsultarCozinhaInexistente() {
+
+        RestAssured.given()
+                .pathParam("cozinhaId", 1000)
+                .accept(ContentType.JSON)
+                .when()
+                .get("/{cozinhaId}")
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
 
 }

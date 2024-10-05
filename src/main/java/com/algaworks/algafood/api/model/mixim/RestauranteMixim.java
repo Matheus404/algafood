@@ -1,4 +1,4 @@
-package com.algaworks.algafood.domain.model.mixim;
+package com.algaworks.algafood.api.model.mixim;
 
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Endereco;

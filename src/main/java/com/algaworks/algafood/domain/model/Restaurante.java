@@ -14,10 +14,7 @@ import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 
 import com.algaworks.algafood.core.validation.Groups;
-import com.algaworks.algafood.core.validation.Multiplo;
-import com.algaworks.algafood.core.validation.TaxaFrete;
 import com.algaworks.algafood.core.validation.ValorZeroIncluiDescricao;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -46,8 +43,6 @@ public class Restaurante {
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
-	//@JsonIgnore
-	//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 	@Valid
 	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
 	@ManyToOne//(fetch = FetchType.LAZY)
@@ -55,28 +50,23 @@ public class Restaurante {
 	@NotNull
 	private Cozinha cozinha;
 
-	@JsonIgnore
 	@Embedded
 	private Endereco endereco;
 
-	@JsonIgnore
 	@CreationTimestamp
 	@Column(nullable = false)
 	private LocalDateTime dataCadastro;
 
-	@JsonIgnore
 	@UpdateTimestamp
 	@Column(nullable = false)
 	private LocalDateTime dataAtualizacao;
 
-	//@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "restaurante_forma_pagamento",
 				joinColumns = @JoinColumn(name = "restaurante_id"),
 				inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
 	private List<FormaPagamento> formasPagamento = new ArrayList<>();
 
-	@JsonIgnore
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
 	

@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.algaworks.algafood.domain.exception.EstadoNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
@@ -28,14 +29,15 @@ public class CadastroEstadoService {
 
 	@Transactional
 	public void excluir(Long estadoId) {
-		Optional<Estado> estado = estadoRepository.findById(estadoId);
 		try {
-			if (estado.isEmpty()) {
-				throw new EstadoNaoEncontradoException(estadoId);
-			}
 			estadoRepository.deleteById(estadoId);
+			estadoRepository.flush();
 
-		} catch (DataIntegrityViolationException e) {
+		} catch (EmptyResultDataAccessException e) {
+			throw new EstadoNaoEncontradoException(estadoId);
+
+		}
+		catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
 					String.format(MSG_ESTADO_EM_USO, estadoId));
 		}

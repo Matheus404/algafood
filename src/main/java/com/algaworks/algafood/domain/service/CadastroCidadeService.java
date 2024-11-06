@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.algaworks.algafood.domain.exception.CidadeNaoEncontradaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
@@ -36,16 +37,17 @@ public class CadastroCidadeService {
 
 	@Transactional
 	public void excluir(Long cidadeId) {
-		Optional<Cidade> cidade = cidadeRepository.findById(cidadeId);
 		try {
-			if (cidade.isEmpty()) {
-				throw new CidadeNaoEncontradaException(cidadeId);
-			}
+			cidadeRepository.deleteById(cidadeId);
+			cidadeRepository.flush();
+
+		} catch (EmptyResultDataAccessException e) {
+			throw new CidadeNaoEncontradaException(cidadeId);
+
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
 					String.format(MSG_CIDADE_EM_USO, cidadeId));
 		}
-
 	}
 
 	public Cidade buscarOuFalhar(Long cidadeId) {

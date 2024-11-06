@@ -7,11 +7,11 @@ import java.math.BigDecimal;
 
 @Setter
 @Getter
-public class RestauranteDTO {
+public class RestauranteModel {
 
     private Long id;
     private String nome;
     private BigDecimal taxaFrete;
-    private CozinhaDTO cozinha;
+    private CozinhaModel cozinha;
 
 }

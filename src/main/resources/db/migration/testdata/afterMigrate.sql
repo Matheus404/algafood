@@ -13,12 +13,12 @@ insert into cidade (id, nome, estado_id) values (53, 'São Paulo', 52);
 insert into cidade (id, nome, estado_id) values (54, 'Campinas', 52);
 insert into cidade (id, nome, estado_id) values (55, 'Fortaleza', 53);
 
-insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (51, 'Thai Gourmet', 10, 51, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 51, '38400-999', 'Rua João Pinheiro', '1000', 'Centro');
-insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values (52, 'Thai Delivery', 9.50, 51, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values (53, 'Tuk Tuk Comida Indiana', 15, 52, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values (54, 'Java Steakhouse', 12, 53, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values (55, 'Lanchonete do Tio Sam', 11, 54, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values (56, 'Bar da Maria', 6, 54, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values (51, 'Thai Gourmet', 10, 51, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true, 51, '38400-999', 'Rua João Pinheiro', '1000', 'Centro');
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values (52, 'Thai Delivery', 9.50, 51, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true);
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values (53, 'Tuk Tuk Comida Indiana', 15, 52, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true);
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values (54, 'Java Steakhouse', 12, 53, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true);
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values (55, 'Lanchonete do Tio Sam', 11, 54, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true);
+insert into restaurante (id, nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values (56, 'Bar da Maria', 6, 54, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true);
 
 
 insert into forma_pagamento (id, descricao) values (51, 'Cartão de crédito');
